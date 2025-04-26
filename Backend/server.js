@@ -309,9 +309,9 @@ app.post("/api/contact", validateContactForm, async (req, res) => {
     }
 
     // Email content with new template
-    const mailOptions = {
+     const mailOptions = {
       from: `"Sudarsana Entrepreneurs Units" <${formData.email}>`,
-      to: "bhaveshvishwakarma223@gmail.com", // RECIPIENT_EMAIL
+      to: process.env.RECIPIENT_EMAIL, // <-- Now dynamic from .env
       subject: `New Contact Form Submission: ${formData.subject}`,
       html: generateEmailTemplate(formData),
       replyTo: formData.email,
@@ -319,10 +319,10 @@ app.post("/api/contact", validateContactForm, async (req, res) => {
         {
           filename: 'company-logo.png',
           path: __dirname + '/public/logo.png',
-          cid: 'company-logo' // same cid value as in the html img src
+          cid: 'company-logo'
         }
       ]
-    }
+    };
 
     // Send email
     await transporter.sendMail(mailOptions)
